@@ -16,7 +16,8 @@ npx babel-node app.js
 We can generate a backwards compatible module by calling Babel and
 transpiling to ES5.
 
-npx babel.js --out-file bundle.js
+npx babel txnSign.js --out-file bundle-txnSign.js
+npx babel app.js --out-file bundle.js
 
 Now we can execute the file in an old version. We are going to try
 it on v8.17.0 for Node.
