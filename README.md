@@ -24,3 +24,21 @@ it on v8.17.0 for Node.
 
 nvm use 8.17.0
 node bundle.js
+
+
+## How to sign transactions EIP-1552
+
+1. In bundle-txnSign.js change the nonce to the next value. Remember that is an autoincremental value. This value should be an hexadecimal string.
+
+2. Compile the script:
+
+npx babel app.js --out-file bundle.js
+
+3. Execute the script:
+
+node bundle.js
+
+4. On the output of the terminal copy the raw tx hexadecimal string and use it to send to a node. Use a node with the operation eth_sendRawTransaction.
+
+5. To finish, ctrl+c to stop the script
+

@@ -2,7 +2,7 @@ import Wallet from 'ethereumjs-wallet';
 
 // Key and wallet generation - global variables
 const privateKey = Buffer.from(
-    'e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109',
+    'c4f0b1136d4a1f4c6db53994a0d1d9a9fd38c0a75a5dd89130b782af80441272',
     'hex',
 )
 
@@ -12,7 +12,7 @@ const address = userWallet.getAddressString()
 
 console.log('private key: ' + userWallet.getPrivateKeyString())
 console.log('public key: ' + publicKey)
-console.log('address: ' + address)
+console.log('address: ' + address) // If the address is running out of funds, use a fauced to get more ETH
 
 
 // TODO create an express server that exposes an endpoint for executing signatures
@@ -32,9 +32,15 @@ subscribe(function(isConnected) {
 const txnSign = require('./bundle-txnSign')
 var txnExecuted = false
 setInterval(function() {
-    if (!txnExecuted && !isNetworkConnected) {
+    if (!txnExecuted 
+        //&& !isNetworkConnected // uncomment line if we want to try the offline functionality
+        ){
         const signedEip1559Txn = txnSign(privateKey, "eip1559")
         console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn)
+
+        //const legacyTxn = txnSign(privateKey, "legacy", address)
+        //console.log("SIGNED LEGACY TXN: " + legacyTxn)
+
         txnExecuted = true
     }
-}, 5000) 
+}, 2000)

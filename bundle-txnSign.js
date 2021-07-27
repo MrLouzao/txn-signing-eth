@@ -6,24 +6,34 @@ var _tx = require("@ethereumjs/tx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+
+  // Data to feed the wallet
+  const twoGwei = "0x77359400";
+  const lessThanTwoGwei = "0x70A71C80";
+  const devAddress = "0x3a60f2900624785babcf58d2bd30a8fae8a80c38";
+  const ropstenChainId = "0x3";
+  const nonce = "0x9"; // increment each time you send a txn
+  const amountInWei = "0x16bcc41e9000"; // 0.00002500 ETH
+
 /**
  * Sign a transaction of type EIP-1559 (type 2)
  */
 function eip1559Transaction(privateKey) {
   // Common is not necessary at all if it's provided as a parameter. Signature should be included.
   var common = new _common["default"]({
-    chain: 'mainnet',
+    chain: 'ropsten',
     hardfork: 'london'
   });
+
   var txData = {
     "data": "0x0",
-    "gasLimit": "0x02625a00",
-    "maxPriorityFeePerGas": "0x01",
-    "maxFeePerGas": "0xff",
-    "nonce": "0x00",
-    "to": "0x203D17B4a1725E001426b7Ab3193E6657b0dBcc6",
-    "value": "0x0186a0",
-    "chainId": "0x1",
+    "gasLimit": "0x9c40",
+    "maxPriorityFeePerGas": lessThanTwoGwei,
+    "maxFeePerGas": twoGwei,
+    "nonce": nonce,
+    "to": devAddress,
+    "value": amountInWei,
+    "chainId": ropstenChainId,
     "accessList": [],
     "type": "0x02"
   };
@@ -43,23 +53,24 @@ function eip1559Transaction(privateKey) {
   console.log("RAW tx: " + rawTx);
   return rawTx;
 }
+
+
 /**
  * Legacy transaction signed without type, rlp encoded
  */
-
-
-function legacyRlpTransaction(privateKey) {
+function legacyRlpTransaction(privateKey, fromAddr) {
   var txData = {
+    "from": fromAddr,
     "data": "0x0",
     // No contract data
-    "gasLimit": "0xF4240",
+    "gasLimit": "0x9c40",
     // 1 000 000
     "gasPrice": "0x6FC23AC00",
     //  30 Gwei
-    "nonce": "0x00",
+    "nonce": nonce,
     // Nonce in Ropsten starts in 1048576
-    "to": "0x203D17B4a1725E001426b7Ab3193E6657b0dBcc6",
-    "value": "0x0186a0"
+    "to": devAddress,
+    "value": amountInWei
   }; // This is generating a transaction for mainnet. If we want to set the testnet, we need to use the common module
   // as we do in EIP1559 transactions
 
@@ -82,9 +93,9 @@ function legacyRlpTransaction(privateKey) {
 } // To sign transactions import this module
 
 
-var txnSign = function txnSign(privateKey, type) {
+var txnSign = function txnSign(privateKey, type, fromAddr) {
   if ("legacy" === type) {
-    return legacyRlpTransaction(privateKey);
+    return legacyRlpTransaction(privateKey, fromAddr);
   } else if ("eip1559" === type) {
     return eip1559Transaction(privateKey);
   } else {

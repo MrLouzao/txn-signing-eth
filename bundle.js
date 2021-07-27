@@ -5,7 +5,7 @@ var _ethereumjsWallet = _interopRequireDefault(require("ethereumjs-wallet"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Key and wallet generation - global variables
-var privateKey = Buffer.from('e331b6d69882b4cb4ea581d88e0b604039a3de5967688d3dcffdd2270c0fd109', 'hex');
+var privateKey = Buffer.from('c4f0b1136d4a1f4c6db53994a0d1d9a9fd38c0a75a5dd89130b782af80441272', 'hex');
 
 var userWallet = _ethereumjsWallet["default"].fromPrivateKey(privateKey);
 
@@ -31,9 +31,11 @@ var txnSign = require('./bundle-txnSign');
 
 var txnExecuted = false;
 setInterval(function () {
-  if (!txnExecuted && !isNetworkConnected) {
+  if (!txnExecuted && isNetworkConnected) {
     var signedEip1559Txn = txnSign(privateKey, "eip1559");
-    console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn);
+    console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn); //const legacyTxn = txnSign(privateKey, "legacy", address)
+    //console.log("SIGNED LEGACY TXN: " + legacyTxn)
+
     txnExecuted = true;
   }
-}, 5000);
+}, 2000);
