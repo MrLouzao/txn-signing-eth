@@ -13,13 +13,15 @@ import { FeeMarketEIP1559Transaction, Transaction } from '@ethereumjs/tx'
         "gasLimit": "0x02625a00",
         "maxPriorityFeePerGas": "0x01",
         "maxFeePerGas": "0xff",
-        "nonce": "0x00",
+        "nonce": "0x20",
         "to": "0x203D17B4a1725E001426b7Ab3193E6657b0dBcc6",
         "value": "0x0186a0",
         "chainId": "0x1",
         "accessList": [],
         "type": "0x02"
     }
+
+    console.log("TX DATA TO SIGN", txData)
 
     const tx = FeeMarketEIP1559Transaction.fromTxData(txData, {common})
 

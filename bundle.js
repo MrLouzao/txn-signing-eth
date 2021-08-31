@@ -5,7 +5,7 @@ var _ethereumjsWallet = _interopRequireDefault(require("ethereumjs-wallet"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Key and wallet generation - global variables
-var privateKey = Buffer.from('c4f0b1136d4a1f4c6db53994a0d1d9a9fd38c0a75a5dd89130b782af80441272', 'hex');
+var privateKey = Buffer.from('af34025552b3e25aa5f4a98d8902ef98a3689e90aa18a816ffd666c01ad86aa3', 'hex');
 
 var userWallet = _ethereumjsWallet["default"].fromPrivateKey(privateKey);
 
@@ -13,7 +13,8 @@ var publicKey = userWallet.getPublicKeyString();
 var address = userWallet.getAddressString();
 console.log('private key: ' + userWallet.getPrivateKeyString());
 console.log('public key: ' + publicKey);
-console.log('address: ' + address); // TODO create an express server that exposes an endpoint for executing signatures
+console.log('address: ' + address); // If the address is running out of funds, use a fauced to get more ETH
+// TODO create an express server that exposes an endpoint for executing signatures
 //  - Only sign in case of being connected to the network
 // Behaviour here is intended to simulate the TODO behaviour
 // Only sign transactions if the network is offline
@@ -31,11 +32,12 @@ var txnSign = require('./bundle-txnSign');
 
 var txnExecuted = false;
 setInterval(function () {
-  if (!txnExecuted && isNetworkConnected) {
-    var signedEip1559Txn = txnSign(privateKey, "eip1559");
-    console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn); //const legacyTxn = txnSign(privateKey, "legacy", address)
-    //console.log("SIGNED LEGACY TXN: " + legacyTxn)
+  if (!txnExecuted //&& !isNetworkConnected // uncomment line if we want to try the offline functionality
+  ) {
+      var signedEip1559Txn = txnSign(privateKey, "eip1559");
+      console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn); //const legacyTxn = txnSign(privateKey, "legacy", address)
+      //console.log("SIGNED LEGACY TXN: " + legacyTxn)
 
-    txnExecuted = true;
-  }
+      txnExecuted = true;
+    }
 }, 2000);

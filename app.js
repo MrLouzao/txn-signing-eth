@@ -2,7 +2,7 @@ import Wallet from 'ethereumjs-wallet';
 
 // Key and wallet generation - global variables
 const privateKey = Buffer.from(
-    'c4f0b1136d4a1f4c6db53994a0d1d9a9fd38c0a75a5dd89130b782af80441272',
+    'af34025552b3e25aa5f4a98d8902ef98a3689e90aa18a816ffd666c01ad86aa3',
     'hex',
 )
 

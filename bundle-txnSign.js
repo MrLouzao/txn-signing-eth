@@ -8,11 +8,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 
   // Data to feed the wallet
-  const twoGwei = "0x77359400";
-  const lessThanTwoGwei = "0x70A71C80";
+  const twoGwei = "0x7735f400";
+  const lessThanTwoGwei = "0x70A7fC80";
   const devAddress = "0x3a60f2900624785babcf58d2bd30a8fae8a80c38";
   const ropstenChainId = "0x3";
-  const nonce = "0x9"; // increment each time you send a txn
+  const nonce = "0x21"; // increment each time you send a txn
   const amountInWei = "0x16bcc41e9000"; // 0.00002500 ETH
 
 /**
