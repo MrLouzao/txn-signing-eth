@@ -17,7 +17,17 @@ var address = userWallet.getAddressString(); //console.log('private key: ' + use
 
 console.log('public key: ' + publicKey);
 console.log('address: ' + address); // If the address is running out of funds, use a fauced to get more ETH
-// Simulate offline transaction
+// Helper functions - Convert number to hex
+
+function parseToHex(num) {
+  return "0x" + num.toString(16);
+}
+
+function parseGweiToWeiHex(gwei) {
+  var totalWei = gwei * 1000000000;
+  return parseToHex(totalWei);
+} // Simulate offline transaction
+
 
 var txnSign = require('./bundle-txnSign');
 
@@ -27,16 +37,14 @@ setInterval(function () {
     var tx = {
       to: "0xffC11262622D5069aBad729efe84a95C169d9c06",
       // replace with dest
-      nonce: "0x1",
-      gasPrice: "0x3B9ACA0000",
-      //  256 Gwei
-      gasLimit: "0x53FC",
-      // 21500
-      value: "0x0",
+      nonce: parseToHex(1),
+      gasPrice: parseGweiToWeiHex(256),
+      gasLimit: parseToHex(21000),
+      value: parseGweiToWeiHex(1),
       // only if want to send something; if not then not provide
-      data: "0x60806040",
+      data: "0x",
       // put here if want to sign something
-      chainId: 16 // Songbird
+      chainId: 19 // Songbird
 
     };
     var legacyTxn = txnSign(privateKey, "legacy", tx);
