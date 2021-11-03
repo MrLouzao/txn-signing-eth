@@ -9,7 +9,10 @@
     "start:dev": "nodemon --exec babel-node ./app.js",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./app.js -s",
-    "build": "npm run clean && npm run build-babel"
+    "build": "npm run clean && npm run build-babel",
+    "compile-eth": "npx babel txnSign.js --out-file build/bundle-txnSign.js && npx babel app-songbird.js --out-file build/songbird-bundle.js",
+    "compile-songbird": "npx babel txnSign.js --out-file build/bundle-txnSign.js && npx babel app-songbird.js --out-file build/songbird-bundle.js",
+    "exec-songbird": "node build/songbird-bundle.js"
   },
   "keywords": [],
   "author": "",

@@ -2,7 +2,7 @@ import Wallet from 'ethereumjs-wallet';
 
 // Key and wallet generation - global variables
 const privateKey = Buffer.from(
-    'af34025552b3e25aa5f4a98d8902ef98a3689e90aa18a816ffd666c01ad86aa3',
+    '',
     'hex',
 )
 
@@ -35,11 +35,11 @@ setInterval(function() {
     if (!txnExecuted 
         //&& !isNetworkConnected // uncomment line if we want to try the offline functionality
         ){
-        const signedEip1559Txn = txnSign(privateKey, "eip1559")
-        console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn)
+        //const signedEip1559Txn = txnSign(privateKey, "eip1559")
+        //console.log("SIGNED EIP1559 TXN: " + signedEip1559Txn)
 
-        //const legacyTxn = txnSign(privateKey, "legacy", address)
-        //console.log("SIGNED LEGACY TXN: " + legacyTxn)
+        const legacyTxn = txnSign(privateKey, "legacy", address)
+        console.log("SIGNED LEGACY TXN: " + legacyTxn)
 
         txnExecuted = true
     }

@@ -16,8 +16,8 @@ npx babel-node app.js
 We can generate a backwards compatible module by calling Babel and
 transpiling to ES5.
 
-npx babel txnSign.js --out-file bundle-txnSign.js
-npx babel app.js --out-file bundle.js
+npx babel txnSign.js --out-file build/bundle-txnSign.js
+npx babel app-songbird.js --out-file build/bundle.js
 
 Now we can execute the file in an old version. We are going to try
 it on v8.17.0 for Node.
@@ -42,3 +42,27 @@ node bundle.js
 
 5. To finish, ctrl+c to stop the script
 
+## How to execute for songbird
+
+1. Modify data to provide in the txn in app-songbird.js file line 26
+
+Also set the secret to sign
+
+
+2. Compile:  npm run compile-songbird
+
+3. Exec:  npm run exec-songbird
+
+
+Now send the generated raw to the node:
+
+```
+curl --location --request POST 'http://localhost:9650/ext/bc/C/rpc' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "jsonrpc":"2.0",
+    "id"     :1,
+    "method" :"eth_sendRawTransaction",
+    "params" : ["0x01f86a1001853b9aca00008253fc94ffc11262622d5069abad729efe84a95c169d9c06808460806040c001a0d8ca7eb6dd99a81ae88dbe9fb95298e6fdaef545a12bebdcf05de3f3e0a76303a03a313d00e65215ceb2e0dc50d1203dd22538f7f54a08353d7efb6edf053d74dd"]
+}'
+```
